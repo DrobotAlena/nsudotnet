@@ -1,0 +1,8 @@
+{
+"i": 10
+"s": "hihihi"
+"b": True
+"arrayMember": [1,2,3,4,5]
+"list": [fff,dd]
+"dictionary": [[1, alice],[2, eva],[3, bob]]
+}
