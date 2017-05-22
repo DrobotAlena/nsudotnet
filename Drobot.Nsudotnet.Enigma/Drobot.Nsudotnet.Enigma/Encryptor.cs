@@ -19,22 +19,24 @@ namespace Drobot.Nsudotnet.Enigma
                 {
                     using (var outputFileStream = new FileStream(outputFile, FileMode.Create))
                     {
-                        var algorithm = AlgorithmNameParser.GetAlgorithmByName(algorithmName);
-
-                        algorithm.GenerateIV();
-                        algorithm.GenerateKey();
-
-                        var encryptor = algorithm.CreateEncryptor();
-
-                        using (var cryptoStream = new CryptoStream(outputFileStream, encryptor, CryptoStreamMode.Write))
+                        using (var algorithm = AlgorithmNameParser.GetAlgorithmByName(algorithmName))
                         {
-                            inputFileStream.CopyTo(cryptoStream);
 
-                            String inputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFile);
-                            String directory = Path.GetDirectoryName(inputFile);
-                            String keyFileName = String.Concat(directory,"/", inputFileNameWithoutExtension, ".key.txt");
-                            String[] content = { Convert.ToBase64String(algorithm.IV), Convert.ToBase64String(algorithm.Key) };
-                            File.WriteAllLines(keyFileName, content);
+                            algorithm.GenerateIV();
+                            algorithm.GenerateKey();
+
+                            using (var encryptor = algorithm.CreateEncryptor())
+                            {
+
+                                using (var cryptoStream = new CryptoStream(outputFileStream, encryptor, CryptoStreamMode.Write))
+                                {
+                                    inputFileStream.CopyTo(cryptoStream);
+
+                                    String keyFileName = inputFile.Replace(".txt", ".key.txt");
+                                    String[] content = { Convert.ToBase64String(algorithm.IV), Convert.ToBase64String(algorithm.Key) };
+                                    File.WriteAllLines(keyFileName, content);
+                                }
+                            }
                         }
                     }
                 }

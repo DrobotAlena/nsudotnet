@@ -24,12 +24,15 @@ namespace Drobot.Nsudotnet.Enigma
                             byte[] IV = Convert.FromBase64String(streamReader.ReadLine());
                             byte[] key = Convert.FromBase64String(streamReader.ReadLine());
 
-                            var algorithm = AlgorithmNameParser.GetAlgorithmByName(algorithmName);
-                            var decryptor = algorithm.CreateDecryptor(key, IV);
-
-                            using (var cryptoStream = new CryptoStream(inputFileStream, decryptor, CryptoStreamMode.Read))
+                            using (var algorithm = AlgorithmNameParser.GetAlgorithmByName(algorithmName))
                             {
-                                cryptoStream.CopyTo(outputFileStream);
+                                using (var decryptor = algorithm.CreateDecryptor(key, IV))
+                                {
+                                    using (var cryptoStream = new CryptoStream(inputFileStream, decryptor, CryptoStreamMode.Read))
+                                    {
+                                        cryptoStream.CopyTo(outputFileStream);
+                                    }
+                                }
                             }
                         }
                     }
