@@ -32,7 +32,11 @@ namespace Drobot.Nsudotnet.Enigma
                                 {
                                     inputFileStream.CopyTo(cryptoStream);
 
-                                    String keyFileName = inputFile.Replace(".txt", ".key.txt");
+                                     String inputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFile);
+                               
+                                    String directory = Path.GetDirectoryName(inputFile);
+                                    String keyFileName = Path.Combine(directory, String.Format("{0}.key.txt", inputFileNameWithoutExtension));
+
                                     String[] content = { Convert.ToBase64String(algorithm.IV), Convert.ToBase64String(algorithm.Key) };
                                     File.WriteAllLines(keyFileName, content);
                                 }
