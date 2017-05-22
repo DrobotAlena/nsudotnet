@@ -27,7 +27,7 @@ namespace Drobot.Nsudotnet.NumberGuesser
                 "Британские ученые утверждают, что 90% людей - идиоты. Но ты ведь не такой, правда, {0}?",
                 "{0}, и тебя вылечат...", 
                 "{0}, борьба без устали и пощады - это замечательно. Но лучше пойди и съешь бананчик.",
-                "{0}, ты не оправдываешь моих высоких(нет) надежд!"
+                "{0}, ты не оправдываешь моих высоких(нет) надежд."
             };
 
 
@@ -85,29 +85,11 @@ namespace Drobot.Nsudotnet.NumberGuesser
                 }
                 else if (userValue < secretValue)
                 {
-                    history[step] = (String.Format("{0} : Число меньше загаданного", userValue));
-                    if (writeComment)
-                    {
-                        Console.WriteLine(String.Format(forLoserMessages[rand.Next(6)], userName));
-                        Console.WriteLine("И да, твое число меньше загаданного.");
-                    }
-                    else 
-                    {
-                        Console.WriteLine("Твое число меньше загаданного. Попробуй еще раз");
-                    }
+                    WriteComment("меньше");
                 }
                 else if (userValue > secretValue)
                 {
-                    history[step] = (String.Format("{0} : Число больше загаданного", userValue));
-                    if (writeComment)
-                    {
-                        Console.WriteLine(String.Format(forLoserMessages[rand.Next(6)], userName));
-                        Console.WriteLine("И да, твое число больше загаданного.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Твое число больше загаданного. Попробуй еще раз");
-                    }
+                    WriteComment("больше"); 
                 }
 
 
@@ -121,6 +103,22 @@ namespace Drobot.Nsudotnet.NumberGuesser
             }
 
             Console.ReadKey(false);
+        }
+
+
+        static void WriteComment(String s) 
+        {
+
+            history[step] = (String.Format("{0} : Число {1} загаданного", userValue, s));
+            if (writeComment)
+            {
+                Console.WriteLine(String.Format(forLoserMessages[rand.Next(6)], userName));
+                Console.WriteLine("И да, твое число {0} загаданного.", s);
+            }
+            else
+            {
+                Console.WriteLine("Твое число {0} загаданного. Попробуй еще раз", s);
+            }
         }
     }
 }
