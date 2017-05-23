@@ -12,14 +12,12 @@ namespace Drobot.Nsudotnet.JsonSerializer
     class JsonSerializer
     {
 
-        public void Serialize(Object serializibedObject, String outputFileName) 
+        public int Serialize(Object serializibedObject, StreamWriter outputFileWriter) 
         {
 
             if (serializibedObject == null)
             {
-                Console.WriteLine("Serialized object is null");
-                Console.ReadKey();
-                return;
+                return 1;
             }
 
            
@@ -27,9 +25,7 @@ namespace Drobot.Nsudotnet.JsonSerializer
 
             if (t.IsSerializable == false)
             {
-                Console.WriteLine("Object, you want to serialize, not serializible");
-                Console.ReadKey(false);
-                return;
+                return 2;
             }
 
 
@@ -37,9 +33,7 @@ namespace Drobot.Nsudotnet.JsonSerializer
 
             try
             {
-                using (StreamWriter outputFileWriter = new StreamWriter(outputFileName))
-                {
-                    outputFileWriter.WriteLine("{");
+                  outputFileWriter.WriteLine("{");
 
                     foreach (FieldInfo objectFieldInfo in objectFields)
                     {
@@ -69,18 +63,33 @@ namespace Drobot.Nsudotnet.JsonSerializer
                                 arrayString.Append("]");
                                 outputFileWriter.WriteLine(arrayString);
                             }
+                            else 
+                            {
+                                outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
+                                int check = Serialize(objectFieldValue, outputFileWriter);
+                                switch (check)
+                                {
+                                    case 1:
+                                        outputFileWriter.WriteLine("null");
+                                        break;
+                                    case 2:
+                                        outputFileWriter.WriteLine("not serializible");
+                                        break;
+                                }
+                            }
                         }
                     }
 
                     outputFileWriter.WriteLine("}");
                     outputFileWriter.Flush();
-                }
+                    
             }
             catch (System.ArgumentException) 
             {
                 Console.WriteLine("incorrect output file name");
                 Console.ReadKey(false);
             }
+            return 0;
             
         }
 

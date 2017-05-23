@@ -5,4 +5,10 @@
 "arrayMember": [1,2,3,4,5]
 "list": [fff,dd]
 "dictionary": [[1, alice],[2, eva],[3, bob]]
+"innerTestClass": 
+{
+"p": 10
+"happyNumbers": [1,2,3,4,5]
+"happyString": "Hi"
+}
 }

@@ -22,6 +22,8 @@ namespace Drobot.Nsudotnet.JsonSerializer
 
         public Dictionary<int, String> dictionary = new Dictionary<int, String>();
 
+        public InnerTestClass innerTestClass = new InnerTestClass();
+
         public TestClass() 
         {
             list.Add("fff");
@@ -30,6 +32,18 @@ namespace Drobot.Nsudotnet.JsonSerializer
             dictionary.Add(1,"alice");
             dictionary.Add(2, "eva");
             dictionary.Add(3, "bob");
+
         }
     }
+
+    [Serializable]
+    class InnerTestClass 
+    {
+        public int p = 10;
+        public int[] happyNumbers = { 1, 2, 3, 4, 5 };
+        public String happyString = "Hi";
+        [NonSerialized] public String sadString = "I can't see you... And you me too";
+    } 
 }
+
+
