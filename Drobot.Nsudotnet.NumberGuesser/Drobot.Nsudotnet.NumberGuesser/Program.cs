@@ -16,7 +16,6 @@ namespace Drobot.Nsudotnet.NumberGuesser
         private static int secretValue;
         private static int userValue;
         private static int step = 1;
-        private static bool writeComment = false;
         private static String[] history = new String[1000];
         private static String line;
 
@@ -54,15 +53,6 @@ namespace Drobot.Nsudotnet.NumberGuesser
                     break;
                 }
                 userValue = int.Parse(line);
-
-                if (step % 4 == 0)
-                {
-                    writeComment = true;
-                }
-                else
-                {
-                    writeComment = false;
-                }
 
                 if (userValue == secretValue)
                 {
@@ -110,7 +100,7 @@ namespace Drobot.Nsudotnet.NumberGuesser
         {
 
             history[step] = (String.Format("{0} : Число {1} загаданного", userValue, s));
-            if (writeComment)
+            if (step % 4 == 0)
             {
                 Console.WriteLine(String.Format(forLoserMessages[rand.Next(6)], userName));
                 Console.WriteLine("И да, твое число {0} загаданного.", s);
