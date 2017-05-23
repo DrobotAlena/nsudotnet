@@ -22,7 +22,8 @@ namespace Drobot.Nsudotnet.JsonSerializer
 
         public Dictionary<int, String> dictionary = new Dictionary<int, String>();
 
-        public InnerTestClass innerTestClass = new InnerTestClass();
+        public InnerTestClass innerTestClass = null;
+        public InnerTestClass innerTestClass2 = new InnerTestClass();
 
         public TestClass() 
         {

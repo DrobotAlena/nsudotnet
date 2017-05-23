@@ -43,7 +43,11 @@ namespace Drobot.Nsudotnet.JsonSerializer
                         {
                             var objectFieldValue = objectFieldInfo.GetValue(serializibedObject);
 
-                            if (objectFieldInfo.FieldType.IsPrimitive)
+                            if (objectFieldValue == null)
+                            {
+                                outputFileWriter.WriteLine(String.Format("\"{0}\": null", objectFieldInfo.Name));
+                            }
+                            else if (objectFieldInfo.FieldType.IsPrimitive)
                             {
                                 outputFileWriter.WriteLine(String.Format("\"{0}\": {1}", objectFieldInfo.Name, objectFieldValue.ToString()));
                             }
@@ -65,16 +69,10 @@ namespace Drobot.Nsudotnet.JsonSerializer
                             }
                             else 
                             {
-                                outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
-                                int check = Serialize(objectFieldValue, outputFileWriter);
-                                switch (check)
+                                if (objectFieldValue.GetType().IsSerializable)
                                 {
-                                    case 1:
-                                        outputFileWriter.WriteLine("null");
-                                        break;
-                                    case 2:
-                                        outputFileWriter.WriteLine("not serializible");
-                                        break;
+                                    outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
+                                    Serialize(objectFieldValue, outputFileWriter);
                                 }
                             }
                         }
