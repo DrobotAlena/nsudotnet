@@ -43,11 +43,7 @@ namespace Drobot.Nsudotnet.JsonSerializer
                         {
                             var objectFieldValue = objectFieldInfo.GetValue(serializibedObject);
 
-                            if (objectFieldValue == null)
-                            {
-                                outputFileWriter.WriteLine(String.Format("\"{0}\": null", objectFieldInfo.Name));
-                            }
-                            else if (objectFieldInfo.FieldType.IsPrimitive)
+                            if (objectFieldInfo.FieldType.IsPrimitive)
                             {
                                 outputFileWriter.WriteLine(String.Format("\"{0}\": {1}", objectFieldInfo.Name, objectFieldValue.ToString()));
                             }
@@ -68,11 +64,19 @@ namespace Drobot.Nsudotnet.JsonSerializer
                                 outputFileWriter.WriteLine(arrayString);
                             }
                             else 
-                            {
-                                if (objectFieldValue.GetType().IsSerializable)
+                            {   
+                                if(objectFieldInfo.FieldType.IsSerializable)
                                 {
-                                    outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
-                                    Serialize(objectFieldValue, outputFileWriter);
+
+                                    if (objectFieldValue == null)
+                                    {
+                                        outputFileWriter.WriteLine(String.Format("\"{0}\": null", objectFieldInfo.Name));
+                                    }
+                                    else
+                                    {
+                                        outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
+                                        Serialize(objectFieldValue, outputFileWriter);
+                                    }
                                 }
                             }
                         }

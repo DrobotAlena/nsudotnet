@@ -18,6 +18,7 @@ namespace Drobot.Nsudotnet.JsonSerializer
 
         public int[] arrayMember = {1,2,3,4,5};
 
+
         public List<String> list = new List<String>();
 
         public Dictionary<int, String> dictionary = new Dictionary<int, String>();
