@@ -31,14 +31,14 @@ namespace Drobot.Nsudotnet.NumberGuesser
             };
 
 
-        static void Main(String[] args) 
+        static void Main(String[] args)
         {
 
             Console.WriteLine("Введите ваше имя:");
             userName = Console.ReadLine();
 
             secretValue = rand.Next(maxValue);
-            
+
             Stopwatch time = new Stopwatch();
             time.Start();
 
@@ -47,7 +47,7 @@ namespace Drobot.Nsudotnet.NumberGuesser
                 Console.WriteLine("");
                 Console.WriteLine("Пришло время сделать выбор. Твое число...?", userName);
                 line = Console.ReadLine();
-                if (line.Equals("q"))   
+                if (line.Equals("q"))
                 {
                     Console.WriteLine("Сам ты дурацкая игра!");
                     Console.WriteLine("И ты, это, извини, если что");
@@ -59,7 +59,7 @@ namespace Drobot.Nsudotnet.NumberGuesser
                 {
                     writeComment = true;
                 }
-                else 
+                else
                 {
                     writeComment = false;
                 }
@@ -89,12 +89,12 @@ namespace Drobot.Nsudotnet.NumberGuesser
                 }
                 else if (userValue > secretValue)
                 {
-                    WriteComment("больше"); 
+                    WriteComment("больше");
                 }
 
 
                 step++;
-                if(step >= 1000)
+                if (step >= 1000)
                 {
                     Console.WriteLine("У меня не осталось печатных слов и желания играть с тобой. Уходи");
                     break;
@@ -106,7 +106,7 @@ namespace Drobot.Nsudotnet.NumberGuesser
         }
 
 
-        static void WriteComment(String s) 
+        static void WriteComment(String s)
         {
 
             history[step] = (String.Format("{0} : Число {1} загаданного", userValue, s));
